@@ -1,6 +1,6 @@
 using System.Collections.Frozen;
 
-namespace dev.oliverhesse.core;
+namespace CoreLibrary;
 
 /// <summary>
 /// A read-only snapshot of a registry, created by <see cref="Registry{T}.Freeze"/>.

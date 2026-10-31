@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace dev.oliverhesse.core;
+namespace CoreLibrary;
 
 /// <summary>
 /// An immutable identifier made of a namespace and an identifier, written as <c>namespace:identifier</c>.

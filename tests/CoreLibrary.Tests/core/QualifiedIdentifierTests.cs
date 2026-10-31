@@ -1,6 +1,4 @@
-using dev.oliverhesse.core;
-
-namespace CoreLibrary.Tests.dev.oliverhesse.core;
+namespace CoreLibrary.Tests;
 
 public class QualifiedIdentifierTests
 {

@@ -1,4 +1,4 @@
-namespace dev.oliverhesse.core;
+namespace CoreLibrary;
 
 /// <summary>A registry that can be modified. Use <see cref="Registry{T}.Freeze"/> to take a read-only snapshot.</summary>
 public sealed class DynamicRegistry<T> : Registry<T> where T : notnull

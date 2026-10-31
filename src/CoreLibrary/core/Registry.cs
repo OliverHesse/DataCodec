@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
-namespace dev.oliverhesse.core;
+namespace CoreLibrary;
 
 /// <summary>
 /// A named map of <see cref="QualifiedIdentifier"/> keys to unique, non-null values, with reverse lookup.
