@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CoreLibrary\CoreLibrary.csproj" />
+    <ProjectReference Include="..\..\src\DataCodec\DataCodec.csproj" />
   </ItemGroup>
 
 </Project>
