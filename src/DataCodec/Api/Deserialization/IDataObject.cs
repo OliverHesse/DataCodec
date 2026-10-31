@@ -1,4 +1,4 @@
-namespace DataCodec.Api;
+namespace DataCodec.Api.Deserialization;
 
 /// <summary>
 /// A format-independent view of a piece of data: a collection of key-value pairs, an array, or a single value.

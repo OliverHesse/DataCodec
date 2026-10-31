@@ -1,7 +1,7 @@
 using System.Text.Json;
-using DataCodec.Api;
+using DataCodec.Api.Deserialization;
 
-namespace DataCodec.Json;
+namespace DataCodec.Json.Deserialization;
 
 /// <summary>
 /// An <see cref="IDataObject"/> backed by a <see cref="JsonElement"/>. Conversions are strict: a JSON string
@@ -30,14 +30,14 @@ public sealed class JsonDataObject : IDataObject
     }
 
     /// <summary>Parses a JSON document. Invalid JSON gives a failed result holding the <see cref="JsonException"/>.</summary>
-    public static DataResult<JsonDataObject> Parse(string json, JsonDocumentOptions options = default)
+    public static DataResult<IDataObject> Parse(string json, JsonDocumentOptions options = default)
     {
         ArgumentNullException.ThrowIfNull(json);
         return ParseDocument(() => JsonDocument.Parse(json, options));
     }
 
     /// <summary>Parses a UTF-8 JSON document. Invalid JSON gives a failed result holding the <see cref="JsonException"/>.</summary>
-    public static DataResult<JsonDataObject> Parse(Stream utf8Json, JsonDocumentOptions options = default)
+    public static DataResult<IDataObject> Parse(Stream utf8Json, JsonDocumentOptions options = default)
     {
         ArgumentNullException.ThrowIfNull(utf8Json);
         return ParseDocument(() => JsonDocument.Parse(utf8Json, options));
@@ -71,7 +71,7 @@ public sealed class JsonDataObject : IDataObject
             return DataResult<IDataObject>.Fail(new KeyNotFoundException($"{Path}: key '{key}' not found"));
         }
 
-        return DataResult<IDataObject>.Success(new JsonDataObject(child, ChildPath(key)));
+        return DataResult<IDataObject>.Success(new JsonDataObject(child, DataPath.Key(Path, key)));
     }
 
     public DataResult<IDataArray> GetDataArray() =>
@@ -103,17 +103,17 @@ public sealed class JsonDataObject : IDataObject
 
     public override string ToString() => Element.GetRawText();
 
-    private static DataResult<JsonDataObject> ParseDocument(Func<JsonDocument> parse)
+    private static DataResult<IDataObject> ParseDocument(Func<JsonDocument> parse)
     {
         try
         {
             using JsonDocument document = parse();
             // Clone so the element stays valid after the document is disposed.
-            return DataResult<JsonDataObject>.Success(new JsonDataObject(document.RootElement.Clone()));
+            return DataResult<IDataObject>.Success(new JsonDataObject(document.RootElement.Clone()));
         }
         catch (JsonException error)
         {
-            return DataResult<JsonDataObject>.Fail(error);
+            return DataResult<IDataObject>.Fail(error);
         }
     }
 
@@ -131,14 +131,4 @@ public sealed class JsonDataObject : IDataObject
 
     private InvalidCastException WrongKind(string expected) =>
         new($"{Path}: expected {expected} but was {Element.ValueKind}");
-
-    /// <summary>Builds the path of a property: <c>$.name</c>, or <c>$['odd key']</c> if the key is not a plain identifier.</summary>
-    private string ChildPath(string key)
-    {
-        bool isIdentifier = key.Length > 0
-            && (char.IsLetter(key[0]) || key[0] == '_')
-            && key.All(c => char.IsLetterOrDigit(c) || c == '_');
-
-        return isIdentifier ? $"{Path}.{key}" : $"{Path}['{key.Replace("'", "\\'")}']";
-    }
 }

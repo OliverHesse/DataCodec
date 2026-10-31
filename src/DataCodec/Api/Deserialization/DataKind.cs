@@ -1,4 +1,4 @@
-namespace DataCodec.Api;
+namespace DataCodec.Api.Deserialization;
 
 /// <summary>What an <see cref="IDataObject"/> holds.</summary>
 public enum DataKind

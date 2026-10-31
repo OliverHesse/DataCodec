@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace DataCodec.Api;
+namespace DataCodec;
 
 /// <summary>
 /// The outcome of reading data: either a non-null value or the <see cref="Exception"/> describing why it failed.

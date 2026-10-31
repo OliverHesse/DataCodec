@@ -1,9 +1,9 @@
 using System.Text;
 using System.Text.Json;
-using DataCodec.Api;
-using DataCodec.Json;
+using DataCodec.Api.Deserialization;
+using DataCodec.Json.Deserialization;
 
-namespace DataCodec.Tests.Json;
+namespace DataCodec.Tests.Json.Deserialization;
 
 public class JsonDataObjectTests
 {
@@ -19,7 +19,7 @@ public class JsonDataObjectTests
         var result = JsonDataObject.Parse(Sample);
 
         Assert.True(result.IsSuccess);
-        Assert.Equal("$", result.Value!.Path);
+        Assert.Equal("$", PathOf(result.Value!));
     }
 
     [Fact]

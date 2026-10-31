@@ -1,7 +1,7 @@
 using System.Text.Json;
-using DataCodec.Api;
+using DataCodec.Api.Deserialization;
 
-namespace DataCodec.Json;
+namespace DataCodec.Json.Deserialization;
 
 /// <summary>An <see cref="IDataArray"/> backed by a JSON array <see cref="JsonElement"/>.</summary>
 public sealed class JsonDataArray : IDataArray
@@ -28,7 +28,7 @@ public sealed class JsonDataArray : IDataArray
 
     public IDataObject[] AsArray() =>
         Element.EnumerateArray()
-            .Select((element, index) => (IDataObject)new JsonDataObject(element, $"{Path}[{index}]"))
+            .Select((element, index) => (IDataObject)new JsonDataObject(element, DataPath.Index(Path, index)))
             .ToArray();
 
     public override string ToString() => Element.GetRawText();

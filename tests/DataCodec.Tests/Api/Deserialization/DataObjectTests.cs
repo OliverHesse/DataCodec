@@ -1,6 +1,6 @@
-using DataCodec.Api;
+using DataCodec.Api.Deserialization;
 
-namespace DataCodec.Tests.Api;
+namespace DataCodec.Tests.Api.Deserialization;
 
 public class DataObjectTests
 {

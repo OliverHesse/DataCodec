@@ -1,6 +1,4 @@
-using DataCodec.Api;
-
-namespace DataCodec.Tests.Api;
+namespace DataCodec.Tests;
 
 public class DataResultTests
 {
