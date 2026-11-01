@@ -6,7 +6,7 @@ namespace DataCodec.Codecs;
 
 /// <summary>
 /// One key of an object: the codec for its value and the getter that reads it from <typeparamref name="TOwner"/>.
-/// Created with <see cref="CodecExtensions.Field"/> or <see cref="CodecExtensions.Optional"/> and passed to
+/// Created with <see cref="CodecExtensions.Field"/> or one of the <c>CodecExtensions.Optional</c> overloads and passed to
 /// <see cref="Codec.Object{TOwner, T1}"/>.
 /// </summary>
 public sealed class FieldCodec<TOwner, T> : IFieldCodec<TOwner> where TOwner : notnull where T : notnull
