@@ -47,6 +47,7 @@ public sealed class JsonDataObject : IDataObject
     {
         JsonValueKind.Object => DataKind.Object,
         JsonValueKind.Array => DataKind.Array,
+        JsonValueKind.Null => DataKind.Null,
         _ => DataKind.Value,
     };
 

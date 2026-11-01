@@ -11,6 +11,9 @@ public interface IDataObject
 {
     DataKind Kind { get; }
 
+    /// <summary>Where this object sits in the document, e.g. <c>$</c>, <c>$.tag</c> or <c>$.tag[1]</c>.</summary>
+    string Path { get; }
+
     /// <summary>The keys of this object, or empty if it is not a <see cref="DataKind.Object"/>.</summary>
     IEnumerable<string> Keys { get; }
 
@@ -23,6 +26,8 @@ public interface IDataObject
     bool IsArray() => IsKind(DataKind.Array);
 
     bool IsValue() => IsKind(DataKind.Value);
+
+    bool IsNull() => IsKind(DataKind.Null);
 
     /// <summary>Gets the data object stored under <paramref name="key"/>.</summary>
     DataResult<IDataObject> GetDataObject(string key);

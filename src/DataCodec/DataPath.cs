@@ -16,4 +16,10 @@ internal static class DataPath
     }
 
     public static string Index(string parent, int index) => $"{parent}[{index}]";
+
+    /// <summary>
+    /// Moves <paramref name="path"/>, which starts at its own <c>$</c>, under <paramref name="parentPath"/>:
+    /// <c>Rebase("$.speed", "$.stats")</c> gives <c>$.stats.speed</c>.
+    /// </summary>
+    public static string Rebase(string path, string parentPath) => parentPath + path[Root.Length..];
 }

@@ -73,10 +73,26 @@ public class JsonDataObjectTests
     [InlineData("12", DataKind.Value)]
     [InlineData("true", DataKind.Value)]
     [InlineData("false", DataKind.Value)]
-    [InlineData("null", DataKind.Value)]
+    [InlineData("null", DataKind.Null)]
     public void Kind_MatchesJson(string json, DataKind kind)
     {
         Assert.Equal(kind, Parse(json).Kind);
+    }
+
+    [Fact]
+    public void IsNull_OnlyForNull()
+    {
+        Assert.True(Parse("null").IsNull());
+        Assert.False(Parse("0").IsNull());
+        Assert.False(Parse("{}").IsNull());
+    }
+
+    [Fact]
+    public void Path_ExposedOnInterface()
+    {
+        IDataObject child = Parse(Sample).GetDataObject("id").GetOrThrow();
+
+        Assert.Equal("$.id", child.Path);
     }
 
     [Fact]

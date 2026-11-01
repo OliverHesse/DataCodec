@@ -9,7 +9,7 @@ namespace DataCodec.Api.Serialization;
 /// </remarks>
 public interface IDataWriter
 {
-    void WriteStartObject(); // stuff
+    void WriteStartObject(); 
 
     void WriteEndObject();
 

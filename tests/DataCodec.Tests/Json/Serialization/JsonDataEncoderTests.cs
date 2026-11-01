@@ -28,6 +28,21 @@ public class JsonDataEncoderTests
     }
 
     [Fact]
+    public void EncodeWithWriterAction_WritesJson()
+    {
+        IDataEncoder encoder = JsonDataEncoder.Compact;
+
+        var result = encoder.EncodeToString(w =>
+        {
+            w.WriteStartArray();
+            w.WriteInt(1);
+            w.WriteEndArray();
+        });
+
+        Assert.Equal("[1]", result.GetOrThrow());
+    }
+
+    [Fact]
     public void Compact_ExactOutput()
     {
         string json = CreateSample().EncodeToString(JsonDataEncoder.Compact).GetOrThrow();
@@ -81,7 +96,7 @@ public class JsonDataEncoderTests
         Assert.Equal(0.1m, back.GetDecimal("m").GetOrThrow());
         Assert.Equal("hi \"there\"", back.GetString("s").GetOrThrow());
         Assert.True(back.GetBool("b").GetOrThrow());
-        Assert.True(back.GetDataObject("n").GetOrThrow().IsValue());
+        Assert.True(back.GetDataObject("n").GetOrThrow().IsNull());
         Assert.True(back.GetString("n").IsError);
         Assert.Equal(7, back.AsArray("a").GetOrThrow()[0].GetInt("x").GetOrThrow());
         Assert.Equal(new[] { "i", "l", "f", "d", "m", "s", "b", "n", "a" }, back.Keys);
