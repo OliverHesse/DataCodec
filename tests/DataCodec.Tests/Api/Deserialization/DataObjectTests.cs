@@ -101,6 +101,8 @@ public class DataObjectTests
 
         public DataKind Kind { get; }
 
+        public string Path => "$";
+
         public IEnumerable<string> Keys => _entries?.Keys ?? Enumerable.Empty<string>();
 
         public int Length => _elements?.Length ?? 0;

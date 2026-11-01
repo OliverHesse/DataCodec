@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using DataCodec.Api.Serialization;
 
@@ -22,28 +21,13 @@ public sealed class JsonDataEncoder : IDataEncoder
 
     public string Name => "json";
 
-    public void Encode(SerializationElement root, Stream stream)
+    public void Encode(Stream stream, Action<IDataWriter> write)
     {
-        ArgumentNullException.ThrowIfNull(root);
         ArgumentNullException.ThrowIfNull(stream);
+        ArgumentNullException.ThrowIfNull(write);
 
         using var writer = new Utf8JsonWriter(stream, _options);
-        root.Encode(new JsonDataWriter(writer));
+        write(new JsonDataWriter(writer));
         writer.Flush();
-    }
-
-    public DataResult<string> EncodeToString(SerializationElement root)
-    {
-        using var buffer = new MemoryStream();
-        try
-        {
-            Encode(root, buffer);
-        }
-        catch (DataEncodeException error)
-        {
-            return DataResult<string>.Fail(error);
-        }
-
-        return DataResult<string>.Success(Encoding.UTF8.GetString(buffer.ToArray()));
     }
 }

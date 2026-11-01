@@ -11,4 +11,7 @@ public enum DataKind
 
     /// <summary>A single value such as a number, string or bool.</summary>
     Value,
+
+    /// <summary>A null value.</summary>
+    Null,
 }

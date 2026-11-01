@@ -1,4 +1,5 @@
 using DataCodec.Api.Serialization;
+using DataCodec.Tests.TestSupport;
 
 namespace DataCodec.Tests.Api.Serialization;
 
@@ -87,46 +88,5 @@ public class EncodeTests
         Assert.Equal("$.stats.speed", error.Path);
         Assert.Equal("$.stats.speed: doubles not supported", error.Message);
         Assert.IsType<NotSupportedException>(error.InnerException);
-    }
-
-    private sealed class RecordingWriter : IDataWriter
-    {
-        public List<string> Calls { get; } = [];
-
-        public bool FailDoubles { get; init; }
-
-        public void WriteStartObject() => Calls.Add("{");
-
-        public void WriteEndObject() => Calls.Add("}");
-
-        public void WriteStartArray() => Calls.Add("[");
-
-        public void WriteEndArray() => Calls.Add("]");
-
-        public void WriteKey(string key) => Calls.Add($"key:{key}");
-
-        public void WriteInt(int value) => Calls.Add($"int:{value}");
-
-        public void WriteLong(long value) => Calls.Add($"long:{value}");
-
-        public void WriteFloat(float value) => Calls.Add($"float:{value.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
-
-        public void WriteDouble(double value)
-        {
-            if (FailDoubles)
-            {
-                throw new NotSupportedException("doubles not supported");
-            }
-
-            Calls.Add($"double:{value.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
-        }
-
-        public void WriteDecimal(decimal value) => Calls.Add($"decimal:{value.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
-
-        public void WriteString(string value) => Calls.Add($"string:{value}");
-
-        public void WriteBool(bool value) => Calls.Add($"bool:{value}");
-
-        public void WriteNull() => Calls.Add("null");
     }
 }
