@@ -60,6 +60,7 @@ public class JsonDataEncoderTests
 
         string json = root.EncodeToString(JsonDataEncoder.Indented).GetOrThrow();
 
+        // Both sides are normalised: the raw literal takes this file's line endings, which depend on the checkout.
         Assert.Equal(
             """
             {
@@ -68,7 +69,7 @@ public class JsonDataEncoderTests
                 12
               ]
             }
-            """,
+            """.ReplaceLineEndings("\n"),
             json.ReplaceLineEndings("\n"));
     }
 

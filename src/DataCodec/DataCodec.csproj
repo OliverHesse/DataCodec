@@ -6,4 +6,28 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>OliverHesse.DataCodec</PackageId>
+    <!-- Local default; the publish workflow sets the version from the git tag. -->
+    <Version>0.1.0</Version>
+    <Authors>Oliver Hesse</Authors>
+    <Description>Format-independent reading and writing of key-value data (JSON built in), with composable codecs that map C# types to and from data in one declaration.</Description>
+    <PackageTags>serialization;deserialization;json;codec</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/OliverHesse/DataCodec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OliverHesse/DataCodec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Not every public member has a doc comment (e.g. simple getters). -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
 </Project>
