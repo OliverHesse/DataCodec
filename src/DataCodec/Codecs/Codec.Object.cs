@@ -7,7 +7,7 @@ public static partial class Codec
 {
     /// <summary>An object codec with 1 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1>(
+    public static IMapCodec<TOwner> Object<TOwner, T1>(
         FieldCodec<TOwner, T1> f1,
         Func<T1, TOwner> supplier)
         where TOwner : notnull where T1 : notnull
@@ -18,7 +18,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 2 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2,
         Func<T1, T2, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull
@@ -29,7 +29,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 3 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3,
         Func<T1, T2, T3, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull
@@ -40,7 +40,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 4 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4,
         Func<T1, T2, T3, T4, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull
@@ -51,7 +51,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 5 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5,
         Func<T1, T2, T3, T4, T5, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull
@@ -62,7 +62,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 6 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6,
         Func<T1, T2, T3, T4, T5, T6, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull
@@ -73,7 +73,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 7 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7,
         Func<T1, T2, T3, T4, T5, T6, T7, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull
@@ -84,7 +84,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 8 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull
@@ -95,7 +95,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 9 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull
@@ -106,7 +106,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 10 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9, FieldCodec<TOwner, T10> f10,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull where T10 : notnull
@@ -117,7 +117,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 11 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9, FieldCodec<TOwner, T10> f10, FieldCodec<TOwner, T11> f11,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull where T10 : notnull where T11 : notnull
@@ -128,7 +128,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 12 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9, FieldCodec<TOwner, T10> f10, FieldCodec<TOwner, T11> f11, FieldCodec<TOwner, T12> f12,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull where T10 : notnull where T11 : notnull where T12 : notnull
@@ -139,7 +139,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 13 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9, FieldCodec<TOwner, T10> f10, FieldCodec<TOwner, T11> f11, FieldCodec<TOwner, T12> f12, FieldCodec<TOwner, T13> f13,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull where T10 : notnull where T11 : notnull where T12 : notnull where T13 : notnull
@@ -150,7 +150,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 14 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9, FieldCodec<TOwner, T10> f10, FieldCodec<TOwner, T11> f11, FieldCodec<TOwner, T12> f12, FieldCodec<TOwner, T13> f13, FieldCodec<TOwner, T14> f14,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull where T10 : notnull where T11 : notnull where T12 : notnull where T13 : notnull where T14 : notnull
@@ -161,7 +161,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 15 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9, FieldCodec<TOwner, T10> f10, FieldCodec<TOwner, T11> f11, FieldCodec<TOwner, T12> f12, FieldCodec<TOwner, T13> f13, FieldCodec<TOwner, T14> f14, FieldCodec<TOwner, T15> f15,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull where T10 : notnull where T11 : notnull where T12 : notnull where T13 : notnull where T14 : notnull where T15 : notnull
@@ -172,7 +172,7 @@ public static partial class Codec
 
     /// <summary>An object codec with 16 field(s); <paramref name="supplier"/> builds the value from the decoded fields, in order.</summary>
     /// <exception cref="ArgumentException">Two fields have the same key.</exception>
-    public static ICodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(
+    public static IMapCodec<TOwner> Object<TOwner, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(
         FieldCodec<TOwner, T1> f1, FieldCodec<TOwner, T2> f2, FieldCodec<TOwner, T3> f3, FieldCodec<TOwner, T4> f4, FieldCodec<TOwner, T5> f5, FieldCodec<TOwner, T6> f6, FieldCodec<TOwner, T7> f7, FieldCodec<TOwner, T8> f8, FieldCodec<TOwner, T9> f9, FieldCodec<TOwner, T10> f10, FieldCodec<TOwner, T11> f11, FieldCodec<TOwner, T12> f12, FieldCodec<TOwner, T13> f13, FieldCodec<TOwner, T14> f14, FieldCodec<TOwner, T15> f15, FieldCodec<TOwner, T16> f16,
         Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TOwner> supplier)
         where TOwner : notnull where T1 : notnull where T2 : notnull where T3 : notnull where T4 : notnull where T5 : notnull where T6 : notnull where T7 : notnull where T8 : notnull where T9 : notnull where T10 : notnull where T11 : notnull where T12 : notnull where T13 : notnull where T14 : notnull where T15 : notnull where T16 : notnull

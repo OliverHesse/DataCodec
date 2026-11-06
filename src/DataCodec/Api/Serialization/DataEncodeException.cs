@@ -17,6 +17,6 @@ public sealed class DataEncodeException : Exception
     public string Reason { get; }
 
     /// <summary>Returns this error moved under <paramref name="parentPath"/>, e.g. <c>$.speed</c> under <c>$.stats</c>.</summary>
-    internal DataEncodeException Under(string parentPath) =>
+    public DataEncodeException Under(string parentPath) =>
         new(DataPath.Rebase(Path, parentPath), Reason, InnerException);
 }

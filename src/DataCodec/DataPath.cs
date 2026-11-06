@@ -1,8 +1,9 @@
 namespace DataCodec;
 
 /// <summary>Builds JSON-path style locations such as <c>$.items[0].name</c> for error messages.</summary>
-internal static class DataPath
+public static class DataPath
 {
+    /// <summary>The path of the document root.</summary>
     public const string Root = "$";
 
     /// <summary>The path of a property: <c>$.name</c>, or <c>$['odd key']</c> if the key is not a plain identifier.</summary>
@@ -15,6 +16,7 @@ internal static class DataPath
         return isIdentifier ? $"{parent}.{key}" : $"{parent}['{key.Replace("'", "\\'")}']";
     }
 
+    /// <summary>The path of an array item: <c>$.items[2]</c>.</summary>
     public static string Index(string parent, int index) => $"{parent}[{index}]";
 
     /// <summary>

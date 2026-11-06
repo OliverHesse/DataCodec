@@ -9,7 +9,7 @@
   <PropertyGroup>
     <PackageId>OliverHesse.DataCodec</PackageId>
     <!-- Local default; the publish workflow sets the version from the git tag. -->
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Authors>Oliver Hesse</Authors>
     <Description>Format-independent reading and writing of key-value data (JSON built in), with composable codecs that map C# types to and from data in one declaration.</Description>
     <PackageTags>serialization;deserialization;json;codec</PackageTags>

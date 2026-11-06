@@ -22,6 +22,17 @@ public class DataResultTests
     }
 
     [Fact]
+    public void Fail_PathAndReason_CreatesDecodeException()
+    {
+        var result = DataResult<int>.Fail("$.x", "too big");
+
+        var error = Assert.IsType<DataCodec.Api.Deserialization.DataDecodeException>(result.Error);
+        Assert.Equal("$.x", error.Path);
+        Assert.Equal("too big", error.Reason);
+        Assert.Equal("$.x: too big", error.Message);
+    }
+
+    [Fact]
     public void Fail_HoldsError()
     {
         var error = new InvalidCastException("not an int");
