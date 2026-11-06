@@ -21,6 +21,43 @@ public static partial class CodecExtensions
     }
 
     /// <summary>
+    /// Uses this codec for <typeparamref name="TSub"/> as a codec for its base type <typeparamref name="TBase"/>, e.g.
+    /// <c>circleCodec.Upcast&lt;Circle, IShape&gt;()</c>. Decoding always succeeds as far as the cast goes; encoding a
+    /// value that is not a <typeparamref name="TSub"/> throws <see cref="DataEncodeException"/>.
+    /// </summary>
+    /// <remarks>
+    /// C# cannot infer <typeparamref name="TSub"/> while <typeparamref name="TBase"/> is given, so both are named.
+    /// <c>Codec.For&lt;TBase&gt;().From(codec)</c> infers <typeparamref name="TSub"/> instead.
+    /// </remarks>
+    public static ICodec<TBase> Upcast<TSub, TBase>(this ICodec<TSub> codec)
+        where TSub : notnull, TBase where TBase : notnull
+    {
+        ArgumentNullException.ThrowIfNull(codec);
+        return new UpcastCodec<TSub, TBase>(codec);
+    }
+
+    /// <summary>
+    /// Same as <see cref="Upcast{TSub, TBase}(ICodec{TSub})"/>, but the result is still a map codec, so it can be used
+    /// where object fields are needed, such as a <see cref="Codec.Dispatch{TBase, TKey}"/> type.
+    /// </summary>
+    public static IMapCodec<TBase> Upcast<TSub, TBase>(this IMapCodec<TSub> codec)
+        where TSub : notnull, TBase where TBase : notnull
+    {
+        ArgumentNullException.ThrowIfNull(codec);
+        return new UpcastMapCodec<TSub, TBase>(codec);
+    }
+
+    /// <summary>Same as <see cref="Xmap{A, B}(ICodec{A}, Func{A, B}, Func{B, A})"/>, but the result is still a map codec.</summary>
+    public static IMapCodec<B> Xmap<A, B>(this IMapCodec<A> codec, Func<A, B> decode, Func<B, A> encode)
+        where A : notnull where B : notnull
+    {
+        ArgumentNullException.ThrowIfNull(codec);
+        ArgumentNullException.ThrowIfNull(decode);
+        ArgumentNullException.ThrowIfNull(encode);
+        return new XmapMapCodec<A, B>(codec, decode, encode);
+    }
+
+    /// <summary>
     /// A required field of an object codec. Decoding fails when <paramref name="key"/> is missing or its value is null.
     /// </summary>
     public static FieldCodec<TOwner, T> Field<TOwner, T>(this ICodec<T> codec, string key, Func<TOwner, T> getter)
@@ -70,6 +107,13 @@ public static partial class CodecExtensions
         return new ListCodec<T>(codec);
     }
 
+    /// <summary>A codec for an array of this codec's values, read from and written to an array.</summary>
+    public static ICodec<T[]> ArrayOf<T>(this ICodec<T> codec) where T : notnull
+    {
+        ArgumentNullException.ThrowIfNull(codec);
+        return new ArrayCodec<T>(codec);
+    }
+
     /// <summary>A codec for a string-keyed dictionary of this codec's values, read from and written to an object.</summary>
     public static ICodec<Dictionary<string, T>> DictionaryOf<T>(this ICodec<T> codec) where T : notnull
     {
@@ -78,6 +122,7 @@ public static partial class CodecExtensions
     }
 
     /// <summary>Rejects values for which <paramref name="predicate"/> is false: a failed result when decoding, a throw when encoding.</summary>
+    /// <remarks>The result is a plain <see cref="ICodec{T}"/>, even when this codec is an <see cref="IMapCodec{T}"/>.</remarks>
     public static ICodec<T> Validate<T>(this ICodec<T> codec, Func<T, bool> predicate, string reason) where T : notnull
     {
         ArgumentNullException.ThrowIfNull(reason);

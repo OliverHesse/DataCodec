@@ -65,8 +65,64 @@ DataResult<Player> loaded = PlayerCodec.DecodeFile(JsonDataDecoder.Default, "pla
 PlayerCodec.EncodeToFile(new Player(1, "Ada", 3, [Color.Red]), JsonDataEncoder.Indented, "player.json");
 ```
 
-Built-in codecs include primitives, `ListOf`, `DictionaryOf`, `Codec.Enum<T>()`, `Xmap` for conversions, and
-`Validate`, `Min`, `Max`, `Range` and `Clamp` for rules.
+Built-in codecs include primitives, `ListOf`, `ArrayOf`, `DictionaryOf`, `Codec.Enum<T>()`, `Xmap` for conversions,
+`Upcast` and `Codec.Recursive` for type hierarchies and recursive data, and `Validate`, `Min`, `Max`, `Range` and
+`Clamp` for rules.
+
+## Polymorphic types
+
+To read and write an interface with several implementations, build each implementation's codec with
+`Codec.For<TBase>()`. The getters take the real type, so there is nothing to cast, and the result is a codec for the
+base type:
+
+```csharp
+interface IShape;
+record Circle(double R) : IShape;
+record Square(double S) : IShape;
+
+static readonly IMapCodec<IShape> CircleCodec = Codec.For<IShape>().Object(
+    Codec.Double.Field("r", (Circle c) => c.R),
+    r => new Circle(r));
+```
+
+Encoding an `IShape` that is not a `Circle` with `CircleCodec` throws `DataEncodeException`. An existing codec can be
+used for the base type with `Codec.For<IShape>().From(codec)`.
+
+## Type dispatch
+
+`Codec.Dispatch` reads and writes any implementation as one flat object whose `type` key picks the codec for the
+rest of it:
+
+```csharp
+static readonly Dictionary<string, IMapCodec<IShape>> ShapeTypes = new()
+{
+    ["circle"] = CircleCodec,
+    ["square"] = Codec.For<IShape>().Object(Codec.Double.Field("s", (Square s) => s.S), s => new Square(s)),
+};
+
+static readonly ICodec<IShape> ShapeCodec = Codec.Dispatch<IShape, string>(
+    Codec.String,
+    shape => shape switch { Circle => "circle", Square => "square", _ => "unknown" },
+    ShapeTypes.GetValueOrDefault);
+
+ShapeCodec.EncodeToString(new Circle(2), JsonDataEncoder.Compact);   // {"type":"circle","r":2}
+```
+
+The lookup runs on every call, so types can be added after the codec is created. The type key can be any codec,
+such as an enum, and its name can be changed with the `typeKey` argument.
+
+## Recursive codecs
+
+`Codec.Recursive` passes the codec being built to its own definition:
+
+```csharp
+record Node(string Name, Node[] Children);
+
+static readonly ICodec<Node> NodeCodec = Codec.Recursive<Node>(self => Codec.Object(
+    Codec.String.Field("name", (Node n) => n.Name),
+    self.ArrayOf().Optional("children", () => [], (Node n) => n.Children),
+    (name, children) => new Node(name, children)));
+```
 
 ## Errors
 
@@ -74,6 +130,16 @@ Built-in codecs include primitives, `ListOf`, `DictionaryOf`, `Codec.Enum<T>()`,
   Call `GetOrThrow()` if you would rather have an exception.
 - **Encoding** to a stream or file throws `DataEncodeException` (with the path) when a value can't be written, and
   I/O errors throw as usual. `EncodeToString` returns a `DataResult` instead.
+- **Custom codecs** can report errors the same way: build paths with `DataPath` (`DataPath.Key`, `DataPath.Index`),
+  fail with `DataResult<T>.Fail(path, reason)`, and move a child's encode error under its parent with
+  `DataEncodeException.Under`.
+
+## Changes in 0.2.0
+
+- `Codec.Object` now returns `IMapCodec<T>`, which extends `ICodec<T>`. Source code compiles unchanged, but code
+  compiled against 0.1.0 must be recompiled.
+- New: `Codec.For`, `Codec.Dispatch`, `Codec.Recursive`, `ArrayOf`, `Upcast`, public `DataPath` and
+  `DataResult<T>.Fail(path, reason)`.
 
 ## License
 

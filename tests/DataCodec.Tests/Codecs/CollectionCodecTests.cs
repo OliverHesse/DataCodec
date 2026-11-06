@@ -51,6 +51,57 @@ public class CollectionCodecTests
     }
 
     [Fact]
+    public void Array_RoundTrips()
+    {
+        var codec = Codec.Int.ArrayOf();
+
+        string text = codec.EncodeToString([1, 2, 3], Encoder).GetOrThrow();
+
+        Assert.Equal("[1,2,3]", text);
+        Assert.Equal(new[] { 1, 2, 3 }, codec.Decode(text, Decoder).GetOrThrow());
+    }
+
+    [Fact]
+    public void Array_Empty_RoundTrips()
+    {
+        var codec = Codec.Int.ArrayOf();
+
+        Assert.Equal("[]", codec.EncodeToString([], Encoder).GetOrThrow());
+        Assert.Empty(codec.Decode("[]", Decoder).GetOrThrow());
+    }
+
+    [Fact]
+    public void Array_ItemFailure_HasIndexPath()
+    {
+        var error = Codec.Int.ArrayOf().Decode("[1, \"x\"]", Decoder).Error;
+
+        Assert.Equal("$[1]: expected Number but was String", error!.Message);
+    }
+
+    [Fact]
+    public void Array_NotArray_Fails()
+    {
+        Assert.True(Codec.Int.ArrayOf().Decode("{}", Decoder).IsError);
+    }
+
+    [Fact]
+    public void Array_Encode_NullItem_PathHasIndex()
+    {
+        var error = EncodeFailure(Codec.String.ArrayOf(), ["a", null!]);
+
+        Assert.Equal("$[1]", error.Path);
+        Assert.Equal("item is null", error.Reason);
+    }
+
+    [Fact]
+    public void Array_Encode_NaNItem_PathHasIndex()
+    {
+        var error = EncodeFailure(Codec.Double.ArrayOf(), [1.0, double.NaN]);
+
+        Assert.Equal("$[1]", error.Path);
+    }
+
+    [Fact]
     public void Dictionary_RoundTrips()
     {
         var codec = Codec.Int.DictionaryOf();

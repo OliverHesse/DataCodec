@@ -129,6 +129,47 @@ public class TransformCodecTests
     }
 
     [Fact]
+    public void Upcast_RoundTrips()
+    {
+        ICodec<IShape> codec = Codec.Double.Xmap(r => new Circle(r), c => c.R).Upcast<Circle, IShape>();
+
+        string text = codec.EncodeToString(new Circle(2), Encoder).GetOrThrow();
+
+        Assert.Equal("2", text);
+        Assert.Equal(new Circle(2), codec.Decode(text, Decoder).GetOrThrow());
+    }
+
+    [Fact]
+    public void Upcast_DecodeFailure_PassesThrough()
+    {
+        ICodec<IShape> codec = Codec.Double.Xmap(r => new Circle(r), c => c.R).Upcast<Circle, IShape>();
+
+        Assert.True(codec.Decode(Json("\"big\"")).IsError);
+    }
+
+    [Fact]
+    public void Upcast_WrongSubtype_ThrowsEncodeException()
+    {
+        ICodec<IShape> codec = Codec.Double.Xmap(r => new Circle(r), c => c.R).Upcast<Circle, IShape>();
+
+        var error = Assert.Throws<DataEncodeException>(() => codec.Encode(new Square(1), new RecordingWriter()));
+
+        Assert.Equal("$", error.Path);
+        Assert.Equal("expected Circle but was Square", error.Reason);
+    }
+
+    [Fact]
+    public void Upcast_WrongSubtypeInField_PathIncludesField()
+    {
+        ICodec<IShape> shape = Codec.Double.Xmap(r => new Circle(r), c => c.R).Upcast<Circle, IShape>();
+        var holder = Codec.Object(shape.Field("shape", (IShape s) => s), s => s);
+
+        var error = Assert.Throws<DataEncodeException>(() => holder.Encode(new Square(1), new RecordingWriter()));
+
+        Assert.Equal("$.shape", error.Path);
+    }
+
+    [Fact]
     public void Range_MinAboveMax_Throws()
     {
         Assert.Throws<ArgumentException>(() => Codec.Int.Range(5, 1));

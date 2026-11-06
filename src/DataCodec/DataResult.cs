@@ -47,6 +47,13 @@ public sealed class DataResult<T> where T : notnull
         return new DataResult<T>(default, error, false);
     }
 
+    /// <summary>
+    /// Creates a failed result whose error is a <see cref="Api.Deserialization.DataDecodeException"/> at
+    /// <paramref name="path"/>, e.g. <c>Fail("$.lives", "must be positive")</c>. Build paths with <see cref="DataPath"/>.
+    /// </summary>
+    public static DataResult<T> Fail(string path, string reason) =>
+        Fail(new Api.Deserialization.DataDecodeException(path, reason));
+
     /// <summary>Returns the value, or throws <see cref="Error"/> if this result failed.</summary>
     public T GetOrThrow() => IsSuccess ? Value : throw Error;
 
